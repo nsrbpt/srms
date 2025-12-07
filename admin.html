@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - SRMS</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <div class="background-gradient"></div>
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p style="color: rgba(0, 0, 0, 0.7); margin-top: 0.5rem; font-weight: 600;">Manage students and support
+            tickets</p>
+        </div>
+        <button class="logout-btn" onclick="window.location.href='index.html'">
+          <span class="material-icons">logout</span>
+          Logout
+        </button>
+      </div>
+
+      <div class="action-grid">
+        <div class="action-card" onclick="addStudent()">
+          <span class="material-icons">person_add</span>
+          <h3>Add Student</h3>
+          <p>Register a new student in the system</p>
+        </div>
+
+        <div class="action-card" onclick="viewStudents()">
+          <span class="material-icons">groups</span>
+          <h3>View Students</h3>
+          <p>Browse all registered students</p>
+        </div>
+
+        <div class="action-card" onclick="viewTickets()">
+          <span class="material-icons">support_agent</span>
+          <h3>View Tickets</h3>
+          <p>Manage support requests</p>
+        </div>
+
+        <div class="action-card" onclick="viewPasswordRequests()">
+          <span class="material-icons">password</span>
+          <h3>Password Requests</h3>
+          <p>Approve password resets</p>
+        </div>
+      </div>
+
+      <div id="studentTable" class="table-container" style="display: none;"></div>
+      <div id="ticketTable" class="table-container" style="display: none;"></div>
+      <div id="passwordRequestTable" class="table-container" style="display: none;"></div>
+    </div>
+  </div>
+
+
+  <!-- Add Student Form Modal -->
+  <div class="form-modal" id="addStudentModal" style="display: none;">
+    <div class="form-modal-content">
+      <button class="back-btn" onclick="closeAddStudentForm()">
+        <span class="material-icons">arrow_back</span>
+        Back
+      </button>
+
+      <div class="form-header">
+        <div class="form-icon">
+          <span class="material-icons">person_add</span>
+        </div>
+        <h2>Add New Student</h2>
+        <p>Enter student details below</p>
+      </div>
+
+      <form onsubmit="submitAddStudent(event)" class="admin-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">person</span> Student Name</label>
+            <input type="text" id="studentName" required placeholder="Enter full name">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">badge</span> Roll Number</label>
+            <input type="text" id="rollNumber" required placeholder="Enter roll number">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">cake</span> Date of Birth</label>
+            <input type="date" id="dateOfBirth" required>
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">phone</span> Mobile Number</label>
+            <input type="tel" id="studentMobile" required placeholder="Enter mobile number">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">school</span> Branch</label>
+            <input type="text" id="branch" required placeholder="e.g., Computer Science">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">workspace_premium</span> Degree Type</label>
+            <input type="text" id="degreeType" required placeholder="e.g., B.Tech">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">grade</span> CGPA</label>
+            <input type="number" step="0.01" id="cgpa" required placeholder="e.g., 8.5">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">groups</span> Club</label>
+            <input type="text" id="club" required placeholder="e.g., Coding Club">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">man</span> Father's Name</label>
+            <input type="text" id="fatherName" required placeholder="Enter father's name">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">woman</span> Mother's Name</label>
+            <input type="text" id="motherName" required placeholder="Enter mother's name">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">phone</span> Parent's Mobile</label>
+            <input type="tel" id="parentMobile" required placeholder="Enter parent's mobile">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">lock</span> Student Password</label>
+            <input type="text" id="studentDefaultPassword" value="student123" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><span class="material-icons">lock</span> Parent Password</label>
+          <input type="text" id="parentDefaultPassword" value="parent123" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">add</span>
+          Add Student
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Student Form Modal -->
+  <div class="form-modal" id="editStudentModal" style="display: none;">
+    <div class="form-modal-content">
+      <button class="back-btn" onclick="closeEditStudentForm()">
+        <span class="material-icons">arrow_back</span>
+        Back
+      </button>
+
+      <div class="form-header">
+        <div class="form-icon">
+          <span class="material-icons">edit</span>
+        </div>
+        <h2>Edit Student</h2>
+        <p>Update student details below</p>
+      </div>
+
+      <form onsubmit="submitEditStudent(event)" class="admin-form">
+        <input type="hidden" id="editStudentIndex">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">person</span> Student Name</label>
+            <input type="text" id="editStudentName" required placeholder="Enter full name">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">badge</span> Roll Number</label>
+            <input type="text" id="editRollNumber" required placeholder="Enter roll number">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">cake</span> Date of Birth</label>
+            <input type="date" id="editDateOfBirth" required>
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">phone</span> Mobile Number</label>
+            <input type="tel" id="editStudentMobile" required placeholder="Enter mobile number">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">school</span> Branch</label>
+            <input type="text" id="editBranch" required placeholder="e.g., Computer Science">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">workspace_premium</span> Degree Type</label>
+            <input type="text" id="editDegreeType" required placeholder="e.g., B.Tech">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">grade</span> CGPA</label>
+            <input type="number" step="0.01" id="editCgpa" required placeholder="e.g., 8.5">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">groups</span> Club</label>
+            <input type="text" id="editClub" required placeholder="e.g., Coding Club">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="material-icons">man</span> Father's Name</label>
+            <input type="text" id="editFatherName" required placeholder="Enter father's name">
+          </div>
+          <div class="form-group">
+            <label><span class="material-icons">woman</span> Mother's Name</label>
+            <input type="text" id="editMotherName" required placeholder="Enter mother's name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><span class="material-icons">phone</span> Parent's Mobile</label>
+          <input type="tel" id="editParentMobile" required placeholder="Enter parent's mobile">
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">save</span>
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chat Toggle Button -->
+  <div class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChatbox()">
+    <span class="material-icons">chat</span>
+  </div>
+
+  <!-- Chatbox -->
+  <div class="chatbox" id="chatbox">
+    <div class="chat-header">
+      <span class="material-icons">chat</span>
+      <h3>Admin Chat</h3>
+      <button class="chat-close-btn" onclick="closeChatbox()">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message">
+        <strong>System:</strong> Welcome to the admin chat!
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message..."
+        onkeypress="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">
+        <span class="material-icons">send</span>
+      </button>
+    </div>
+  </div>
+  <!-- Notification Toast -->
+  <div class="notification-toast" id="notificationToast">
+    <div class="notification-icon" id="notificationIcon">
+      <span class="material-icons">info</span>
+    </div>
+    <div class="notification-content">
+      <strong id="notificationTitle">Notification</strong>
+      <p id="notificationMessage">Message</p>
+    </div>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+
+</html>

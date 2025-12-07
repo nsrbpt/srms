@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Dashboard - SRMS</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <div class="background-gradient"></div>
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <div>
+          <h1>Parent Dashboard</h1>
+          <p style="color: rgba(0, 0, 0, 0.7); margin-top: 0.5rem; font-weight: 600;">Monitor your child's academic
+            progress</p>
+        </div>
+        <button class="logout-btn" onclick="window.location.href='index.html'">
+          <span class="material-icons">logout</span>
+          Logout
+        </button>
+      </div>
+
+      <div class="details-card">
+        <h2>Your Child's Details</h2>
+        <div id="childDetails"></div>
+      </div>
+
+      <div class="action-grid">
+        <div class="action-card" onclick="payFees()">
+          <span class="material-icons">payment</span>
+          <h3>Pay Fees</h3>
+          <p>Make tuition and fee payments</p>
+        </div>
+
+        <div class="action-card" onclick="raiseTicket()">
+          <span class="material-icons">confirmation_number</span>
+          <h3>Raise Ticket</h3>
+          <p>Submit a support request or concern</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Raise Ticket Form Modal -->
+  <div class="form-modal" id="raiseTicketModal" style="display: none;">
+    <div class="form-modal-content">
+      <button class="back-btn" onclick="closeRaiseTicketForm()">
+        <span class="material-icons">arrow_back</span>
+        Back
+      </button>
+
+      <div class="form-header">
+        <div class="form-icon">
+          <span class="material-icons">confirmation_number</span>
+        </div>
+        <h2>Raise Support Ticket</h2>
+        <p>Describe your issue below</p>
+      </div>
+
+      <form onsubmit="submitRaiseTicket(event)" class="admin-form">
+        <div class="form-group">
+          <label><span class="material-icons">description</span> Issue Description</label>
+          <textarea id="ticketIssue" required placeholder="Describe your issue in detail..." rows="6"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">send</span>
+          Submit Ticket
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chat Toggle Button -->
+  <div class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChatbox()">
+    <span class="material-icons">chat</span>
+  </div>
+
+  <!-- Chatbox -->
+  <div class="chatbox" id="chatbox">
+    <div class="chat-header">
+      <span class="material-icons">chat</span>
+      <h3>Chat with Admin</h3>
+      <button class="chat-close-btn" onclick="closeChatbox()">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message">
+        <strong>System:</strong> Welcome! How can we assist you?
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message..."
+        onkeypress="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">
+        <span class="material-icons">send</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="notification-toast" id="notificationToast">
+    <div class="notification-icon" id="notificationIcon">
+      <span class="material-icons">info</span>
+    </div>
+    <div class="notification-content">
+      <strong id="notificationTitle">Notification</strong>
+      <p id="notificationMessage">Message</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

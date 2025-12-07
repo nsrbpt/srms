@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRMS - Student Record Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <div class="background-gradient"></div>
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <div class="login-container">
+    <!-- Main Login Card -->
+    <div class="login-card" id="loginCard">
+      <div class="logo-section">
+        <div class="logo-circle">
+          <span class="material-icons">school</span>
+        </div>
+        <h1 class="app-title">SRMS</h1>
+        <p class="app-subtitle">Student Record Management System</p>
+      </div>
+
+      <div class="login-options">
+        <button class="role-card" onclick="showLoginForm('student')" data-role="student">
+          <div class="role-icon">
+            <span class="material-icons">person</span>
+          </div>
+          <h3>Student Login</h3>
+          <p>Access your academic records</p>
+          <div class="card-shine"></div>
+        </button>
+
+        <button class="role-card" onclick="showLoginForm('parent')" data-role="parent">
+          <div class="role-icon">
+            <span class="material-icons">family_restroom</span>
+          </div>
+          <h3>Parent Login</h3>
+          <p>Monitor your child's progress</p>
+          <div class="card-shine"></div>
+        </button>
+
+        <button class="role-card" onclick="showLoginForm('admin')" data-role="admin">
+          <div class="role-icon">
+            <span class="material-icons">admin_panel_settings</span>
+          </div>
+          <h3>Admin Login</h3>
+          <p>Manage student records</p>
+          <div class="card-shine"></div>
+        </button>
+      </div>
+
+      <div class="footer-text">
+        <span class="material-icons">lock</span>
+        <span>Secure & Encrypted</span>
+      </div>
+    </div>
+
+    <!-- Student Login Form -->
+    <div class="login-form-card" id="studentLoginForm" style="display: none;">
+      <button class="back-btn" onclick="hideLoginForm()">
+        <span class="material-icons">arrow_back</span>
+        Back
+      </button>
+
+      <div class="form-header">
+        <div class="form-icon student-icon">
+          <span class="material-icons">person</span>
+        </div>
+        <h2>Student Login</h2>
+        <p>Enter your credentials to access your dashboard</p>
+      </div>
+
+      <form onsubmit="loginStudent(event)" class="login-form">
+        <div class="form-group">
+          <label for="studentRollNo">
+            <span class="material-icons">badge</span>
+            Roll Number
+          </label>
+          <input type="text" id="studentRollNo" required placeholder="Enter your roll number">
+        </div>
+
+        <div class="form-group">
+          <label for="studentPassword">
+            <span class="material-icons">lock</span>
+            Password
+          </label>
+          <input type="password" id="studentPassword" required placeholder="Enter your password">
+        </div>
+        <div class="form-options">
+          <a href="#" onclick="initForgotPassword('student')" class="forgot-password-link">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">login</span>
+          Login
+        </button>
+      </form>
+    </div>
+
+    <!-- Parent Login Form -->
+    <div class="login-form-card" id="parentLoginForm" style="display: none;">
+      <button class="back-btn" onclick="hideLoginForm()">
+        <span class="material-icons">arrow_back</span>
+        Back
+      </button>
+
+      <div class="form-header">
+        <div class="form-icon parent-icon">
+          <span class="material-icons">family_restroom</span>
+        </div>
+        <h2>Parent Login</h2>
+        <p>Enter your credentials to view your child's progress</p>
+      </div>
+
+      <form onsubmit="loginParent(event)" class="login-form">
+        <div class="form-group">
+          <label for="parentMobile">
+            <span class="material-icons">phone</span>
+            Mobile Number
+          </label>
+          <input type="tel" id="parentMobile" required placeholder="Enter your mobile number">
+        </div>
+
+        <div class="form-group">
+          <label for="parentPassword">
+            <span class="material-icons">lock</span>
+            Password
+          </label>
+          <input type="password" id="parentPassword" required placeholder="Enter your password">
+        </div>
+        <div class="form-options">
+          <a href="#" onclick="initForgotPassword('parent')" class="forgot-password-link">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">login</span>
+          Login
+        </button>
+      </form>
+    </div>
+
+    <!-- Admin Login Form -->
+    <div class="login-form-card" id="adminLoginForm" style="display: none;">
+      <button class="back-btn" onclick="hideLoginForm()">
+        <span class="material-icons">arrow_back</span>
+        Back
+      </button>
+
+      <div class="form-header">
+        <div class="form-icon admin-icon">
+          <span class="material-icons">admin_panel_settings</span>
+        </div>
+        <h2>Admin Login</h2>
+        <p>Enter your credentials to access admin panel</p>
+      </div>
+
+      <form onsubmit="loginAdmin(event)" class="login-form">
+        <div class="form-group">
+          <label for="adminId">
+            <span class="material-icons">badge</span>
+            Admin ID
+          </label>
+          <input type="text" id="adminId" required placeholder="Enter admin ID">
+        </div>
+
+        <div class="form-group">
+          <label for="adminPasscode">
+            <span class="material-icons">lock</span>
+            Passcode
+          </label>
+          <input type="password" id="adminPasscode" required placeholder="Enter passcode">
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">login</span>
+          Login
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="form-modal" id="forgotPasswordModal" style="display: none;">
+    <div class="form-modal-content">
+      <button class="back-btn" onclick="closeForgotPasswordModal()">
+        <span class="material-icons">close</span>
+        Close
+      </button>
+
+      <div class="form-header">
+        <div class="form-icon">
+          <span class="material-icons">lock_reset</span>
+        </div>
+        <h2 id="fpModalTitle">Forgot Password</h2>
+        <p id="fpModalSubtitle">Enter your details to reset password</p>
+      </div>
+
+      <!-- Step 1: Request Form -->
+      <form id="fpRequestForm" onsubmit="submitPasswordRequest(event)" class="login-form">
+        <input type="hidden" id="fpRole">
+        <div class="form-group">
+          <label id="fpInputLabel" for="fpInput">
+            <span class="material-icons">badge</span>
+            Roll Number
+          </label>
+          <input type="text" id="fpInput" required placeholder="Enter your ID">
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">send</span>
+          Check Status / Request Reset
+        </button>
+      </form>
+
+      <!-- Step 2: Reset Form (Hidden initially) -->
+      <form id="fpResetForm" onsubmit="submitNewPassword(event)" class="login-form" style="display: none;">
+        <input type="hidden" id="fpResetId">
+        <div class="form-group">
+          <label for="fpNewPassword">
+            <span class="material-icons">lock_open</span>
+            New Password
+          </label>
+          <input type="password" id="fpNewPassword" required placeholder="Enter new password">
+        </div>
+        <div class="form-group">
+          <label for="fpConfirmPassword">
+            <span class="material-icons">lock_open</span>
+            Confirm Password
+          </label>
+          <input type="password" id="fpConfirmPassword" required placeholder="Confirm new password">
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <span class="material-icons">check_circle</span>
+          Set New Password
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="notification-toast" id="notificationToast">
+    <div class="notification-icon" id="notificationIcon">
+      <span class="material-icons">info</span>
+    </div>
+    <div class="notification-content">
+      <strong id="notificationTitle">Notification</strong>
+      <p id="notificationMessage">Message</p>
+    </div>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+
+</html>
